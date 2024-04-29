@@ -2,19 +2,30 @@ package com.fkode.startcms.repository;
 
 import java.util.List;
 
+import javax.sql.DataSource;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties.Pageable;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.fkode.startcms.model.GrupoPermiso;
+
+import jakarta.annotation.PostConstruct;
+
 import com.fkode.startcms.mapper.GrupoPermisoMapper;
 
 @Repository
 public class GrupoPermisoRepository implements GrupoPermisoRep{
 
 	@Autowired
+	private DataSource dataSource;
 	private JdbcTemplate jdbcTemplate;
+	
+	@PostConstruct
+	public void postConstruct() {
+		jdbcTemplate = new JdbcTemplate(dataSource);
+	}
 
 	@Override
 	public boolean save(GrupoPermiso grupoPermiso) {
@@ -53,6 +64,14 @@ public class GrupoPermisoRepository implements GrupoPermisoRep{
 		return jdbcTemplate.queryForObject("select * from Grupo_Permiso where IdGrupoPermiso = ?"
 				, params, new GrupoPermisoMapper());
 		
+	}
+
+	public JdbcTemplate getJdbcTemplate() {
+		return jdbcTemplate;
+	}
+
+	public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
+		this.jdbcTemplate = jdbcTemplate;
 	}
 	
 }

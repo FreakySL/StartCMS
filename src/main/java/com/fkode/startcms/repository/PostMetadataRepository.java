@@ -2,6 +2,7 @@ package com.fkode.startcms.repository;
 
 import java.util.List;
 
+import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties.Pageable;
@@ -9,13 +10,22 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.fkode.startcms.model.PostMetadata;
+
+import jakarta.annotation.PostConstruct;
+
 import com.fkode.startcms.mapper.PostMetadataMapper;
 
 @Repository
 public class PostMetadataRepository implements PostMetadataRep{
 
 	@Autowired
+	private DataSource dataSource;
 	private JdbcTemplate jdbcTemplate;
+	
+	@PostConstruct
+	public void postConstruct() {
+		jdbcTemplate = new JdbcTemplate(dataSource);
+	}
 
 	@Override
 	public boolean save(PostMetadata postMeta) {
@@ -68,6 +78,14 @@ public class PostMetadataRepository implements PostMetadataRep{
 		return jdbcTemplate.queryForObject("select * from Post_Metadata where IdPostMetadata = ?"
 				, params, new PostMetadataMapper());
 		
+	}
+
+	public JdbcTemplate getJdbcTemplate() {
+		return jdbcTemplate;
+	}
+
+	public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
+		this.jdbcTemplate = jdbcTemplate;
 	}
 	
 }

@@ -2,6 +2,7 @@ package com.fkode.startcms.repository;
 
 import java.util.List;
 
+import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties.Pageable;
@@ -9,13 +10,22 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.fkode.startcms.model.UsuarioMetadata;
+
+import jakarta.annotation.PostConstruct;
+
 import com.fkode.startcms.mapper.UsuarioMetadataMapper;
 
 @Repository
 public class UsuarioMetadataRepository implements UsuarioMetadataRep{
 
 	@Autowired
+	private DataSource dataSource;
 	private JdbcTemplate jdbcTemplate;
+	
+	@PostConstruct
+	public void postConstruct() {
+		jdbcTemplate = new JdbcTemplate(dataSource);
+	}
 
 	@Override
 	public boolean save(UsuarioMetadata usuarioMeta) {
@@ -67,6 +77,14 @@ public class UsuarioMetadataRepository implements UsuarioMetadataRep{
 		return jdbcTemplate.queryForObject("select * from Usuario_Metadata where IdUsuarioMetadata = ?"
 				, params, new UsuarioMetadataMapper());
 		
+	}
+
+	public JdbcTemplate getJdbcTemplate() {
+		return jdbcTemplate;
+	}
+
+	public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
+		this.jdbcTemplate = jdbcTemplate;
 	}
 	
 }

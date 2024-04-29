@@ -2,6 +2,7 @@ package com.fkode.startcms.repository;
 
 import java.util.List;
 
+import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties.Pageable;
@@ -11,11 +12,19 @@ import org.springframework.stereotype.Repository;
 import com.fkode.startcms.mapper.PostMapper;
 import com.fkode.startcms.model.Post;
 
+import jakarta.annotation.PostConstruct;
+
 @Repository
 public class PostRepository implements PostRep{
 
 	@Autowired
+	private DataSource dataSource;
 	private JdbcTemplate jdbcTemplate;
+	
+	@PostConstruct
+	public void postConstruct() {
+		jdbcTemplate = new JdbcTemplate(dataSource);
+	}
 
 	@Override
 	public boolean save(Post post) {
@@ -71,6 +80,14 @@ public class PostRepository implements PostRep{
 		
 		return jdbcTemplate.queryForObject("select * from Post where IdPost = ?", params, new PostMapper());
 		
+	}
+
+	public JdbcTemplate getJdbcTemplate() {
+		return jdbcTemplate;
+	}
+
+	public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
+		this.jdbcTemplate = jdbcTemplate;
 	}
 	
 }

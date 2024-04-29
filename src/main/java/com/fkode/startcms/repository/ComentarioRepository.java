@@ -2,19 +2,30 @@ package com.fkode.startcms.repository;
 
 import java.util.List;
 
+import javax.sql.DataSource;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties.Pageable;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.fkode.startcms.model.Comentario;
+
+import jakarta.annotation.PostConstruct;
+
 import com.fkode.startcms.mapper.ComentarioMapper;
 
 @Repository
 public class ComentarioRepository implements ComentarioRep{
 
 	@Autowired
+	private DataSource dataSource;
 	private JdbcTemplate jdbcTemplate;
+	
+	@PostConstruct
+	public void postConstruct() {
+		jdbcTemplate = new JdbcTemplate(dataSource);
+	}
 
 	@Override
 	public boolean save(Comentario comentario) {
@@ -61,6 +72,14 @@ public class ComentarioRepository implements ComentarioRep{
 		Object[] params = new Object[] {id};
 		
 		return jdbcTemplate.queryForObject("select * from Comentario where IdComentario = ?", params, new ComentarioMapper());
+	}
+
+	public JdbcTemplate getJdbcTemplate() {
+		return jdbcTemplate;
+	}
+
+	public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
+		this.jdbcTemplate = jdbcTemplate;
 	}
 	
 }

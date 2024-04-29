@@ -2,19 +2,30 @@ package com.fkode.startcms.repository;
 
 import java.util.List;
 
+import javax.sql.DataSource;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties.Pageable;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.fkode.startcms.model.Grupo;
+
+import jakarta.annotation.PostConstruct;
+
 import com.fkode.startcms.mapper.GrupoMapper;
 
 @Repository
 public class GrupoRepository implements GrupoRep{
 
 	@Autowired
+	private DataSource dataSource;
 	private JdbcTemplate jdbcTemplate;
+	
+	@PostConstruct
+	public void postConstruct() {
+		jdbcTemplate = new JdbcTemplate(dataSource);
+	}
 
 	@Override
 	public boolean save(Grupo grupo) {
@@ -60,6 +71,14 @@ public class GrupoRepository implements GrupoRep{
 		
 		return jdbcTemplate.queryForObject("select * from Grupo where IdGrupo = ?", params, new GrupoMapper());
 		
+	}
+
+	public JdbcTemplate getJdbcTemplate() {
+		return jdbcTemplate;
+	}
+
+	public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
+		this.jdbcTemplate = jdbcTemplate;
 	}
 	
 }
