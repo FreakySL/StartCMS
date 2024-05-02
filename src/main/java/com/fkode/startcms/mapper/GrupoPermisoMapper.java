@@ -16,6 +16,7 @@ public class GrupoPermisoMapper implements RowMapper<GrupoPermiso>{
 		
 		grupoPermiso.setIdGrupo(rs.getInt("IdGrupo"));
 		grupoPermiso.setIdPermiso(rs.getInt("IdPermiso"));
+		grupoPermiso.setFecha(rs.getDate("Fecha"));
 		
 		return grupoPermiso;
 	}

@@ -10,6 +10,8 @@ public class Categoria {
 	private String Descripcion;
 	private Date Fecha;
 	private long CategoriaSuperior;
+	
+	
 	public long getIdCategoria() {
 		return IdCategoria;
 	}

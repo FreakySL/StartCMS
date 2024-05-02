@@ -1,11 +1,21 @@
 package com.fkode.startcms.model;
 
+import java.util.Date;
+
 public class Contenido {
 
 	private long IdContenido;
 	private String Tipo;
 	private String Contenido;
 	private long IdPost;
+	private Date Fecha;
+	
+	public Date getFecha() {
+		return Fecha;
+	}
+	public void setFecha(Date fecha) {
+		Fecha = fecha;
+	}
 	public long getIdContenido() {
 		return IdContenido;
 	}

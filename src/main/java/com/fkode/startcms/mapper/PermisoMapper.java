@@ -16,6 +16,7 @@ public class PermisoMapper implements RowMapper<Permiso>{
 		
 		permiso.setIdPermiso(rs.getInt("IdPermiso"));
 		permiso.setNombre(rs.getString("Nombre"));
+		permiso.setFecha(rs.getDate("Fecha"));
 		
 		return permiso;
 	}

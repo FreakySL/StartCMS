@@ -68,11 +68,15 @@
 		    <version>8.0.33</version>
 		</dependency>
 
+		<!-- 
 		<dependency>
 			<groupId>com.freakoder</groupId>
 			<artifactId>CursoSpring</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
+		 -->
+	
+		
 	</dependencies>
 
 	<build>

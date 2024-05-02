@@ -1,10 +1,19 @@
 package com.fkode.startcms.model;
 
+import java.util.Date;
+
 public class GrupoPermiso {
 
 	private long IdGrupo;
 	private long IdPermiso;
+	private Date Fecha;
 	
+	public Date getFecha() {
+		return Fecha;
+	}
+	public void setFecha(Date fecha) {
+		Fecha = fecha;
+	}
 	public long getIdGrupo() {
 		return IdGrupo;
 	}

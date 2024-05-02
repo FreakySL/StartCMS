@@ -11,6 +11,8 @@ public class Comentario {
 	private long IdUsuario;
 	private Date Fecha;
 	private long Respuesta;
+	
+	
 	public long getIdComentario() {
 		return IdComentario;
 	}

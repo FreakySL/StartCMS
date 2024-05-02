@@ -44,6 +44,7 @@ public class CategoriaRepository implements CategoriaRep {
 			
 		} catch (Exception e) {
 			
+			e.printStackTrace();
 			log.error(e);
 			return false;
 		}

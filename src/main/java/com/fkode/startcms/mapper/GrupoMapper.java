@@ -16,6 +16,7 @@ public class GrupoMapper implements RowMapper<Grupo>{
 		
 		grupo.setIdGrupo(rs.getInt("IdGrupo"));
 		grupo.setNombre("Nombre");
+		grupo.setFecha(rs.getDate("Fecha"));
 		
 		return grupo;
 	}
